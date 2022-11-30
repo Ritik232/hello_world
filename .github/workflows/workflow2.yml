@@ -6,13 +6,12 @@ on:
     branches:
       - 'master'
     tags:
-      - 'v*'
+      - v1.*.*
 
 jobs:
 build:
   runs-on: ubuntu-latest
   steps:   
-    - uses: actions/checkout@v2
 
     - name: Setup Python version
       uses: actions/setup-python@v2
@@ -21,16 +20,25 @@ build:
     
     -
       name: Checkout
-      uses: actions/checkout@v3
-    
+      uses: actions/checkout@v3  
 
     -
       name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
     
-    - name: Extract latest tag
+    -
+      name : Dump Github context
+      env: 
+        GITHUB_CONTEXT : ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+      if: runner.os != 'Windows'
+
+    - 
+      name: Show Github ref
       run: |
-            GIT_TAG=$GITHUB_REF_NAME
+        echo "TAG=${GITHUB_REF:10}" >> @GITHUB_ENV
+        echo "$GITHUB_REF"
+      if: runner.os != 'Windows'
 
     -
       name: Login to Docker Hub
