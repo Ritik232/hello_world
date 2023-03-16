@@ -1,12 +1,12 @@
 name: hello-world
 
 on: 
-  workflow_dispatch:
-  push:
-    branches:
-      - 'master'
-    tags:
-      - v1.*.*
+  # workflow_dispatch:
+  # push:
+  #   branches:
+  #     - 'master'
+  #   tags:
+  #     - v1.*.*
 
 jobs:
 build:
