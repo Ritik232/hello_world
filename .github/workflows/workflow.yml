@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - master
+    tag:
+      - v*.*.*
 
 jobs:
   lint:
@@ -23,7 +25,7 @@ jobs:
       - name: Use the version
         run: |
           echo ${{ steps.version.outputs.version }}
-          
+
       - name: Use the previous version
         run: |
           echo ${{ steps.version.outputs.previous-version }}
