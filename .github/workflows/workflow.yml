@@ -5,8 +5,6 @@ on:
   push:
     tag:
       - v*.*.*
-    branches:
-      - 'master'
 
 jobs:
   lint:
@@ -21,17 +19,24 @@ jobs:
       - name: Git Version
         id: version
         uses: codacy/git-version@2.7.1
+
+
+      - name: creating tags
+        if: success()
+        run: | 
+            git tag -a v${{ github.run_number }}
+            git push --tags
       
-      - name: Use the version
-        run: |
-          echo ${{ steps.version.outputs.version }}
-          echo ${{ steps.version.outputs }}
+      # - name: Use the version
+      #   run: |
+      #     echo ${{ steps.version.outputs.version }}
+      #     echo ${{ steps.version.outputs }}
 
-      - name: Use the previous version
-        run: |
-          echo ${{ steps.version.outputs.previous-version }}
+      # - name: Use the previous version
+      #   run: |
+      #     echo ${{ steps.version.outputs.previous-version }}
 
-      - name: Dump GitHub context
-        id: github_context_step
-        run: |
-          echo '${{ toJSON(github) }}'
+      # - name: Dump GitHub context
+      #   id: github_context_step
+      #   run: |
+      #     echo '${{ toJSON(github) }}'
