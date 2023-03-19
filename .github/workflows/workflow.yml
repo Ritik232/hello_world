@@ -26,7 +26,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: | 
-            git tag -a v${{ github.run_number }} -m "Version ${{ github.run_number }}"
+            git tag -a v${{ github.run_id }} -m "Version ${{ github.run_id }}"
             git push --tags
       
       # - name: Use the version
