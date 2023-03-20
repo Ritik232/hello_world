@@ -25,14 +25,19 @@ jobs:
           git config --global user.name "Ritik232"
           git config --global user.email "RMittal@calance.com"
 
-      - name: Release
-        uses: semantic-release/action@v5
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
-          debug: true
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
       
-
-
       # - name: Read version number
       #   id: read-version
       #   run: |
