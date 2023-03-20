@@ -35,11 +35,7 @@ jobs:
         id: increment-version
         if: success()
         run: |
-          current_version=$(cat VERSION)
-          echo ${{ current_version }}
-          next_version=$((current_version + 1))
-          echo $next_version > VERSION
-          echo "::set-output name=next_version::$next_version"
+          echo "::set-output name=next_version::${{ format('{0} {1}', ${{ steps.increment-version.outputs.current_version }}, "1") }}"
 
       - name: creating tags
         if: success()
@@ -70,3 +66,8 @@ jobs:
       #   id: github_context_step
       #   run: |
       #     echo '${{ toJSON(github) }}'
+
+                # current_version=$(cat VERSION)
+          # echo ${{ current_version }}
+          # next_version=$((current_version + 1))
+          # echo $next_version > VERSION
