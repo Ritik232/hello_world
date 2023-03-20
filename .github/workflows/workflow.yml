@@ -37,7 +37,7 @@ jobs:
       - name: creating tags
         if: success()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: | 
             git tag -a v${{ steps.increment-version.outputs.next_version }} -m "Version ${{ steps.increment-version.outputs.next_version }}"
             git push --tags
