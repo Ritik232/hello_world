@@ -33,13 +33,14 @@ jobs:
           custom_tag: ${{ github.ref}}
 
       - name: Create a GitHub release
+        if: steps.tag_version.outputs.tag_created_successfully == 'true'
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
       
-      # - name: Read version number
+      # - name: Read version number 
       #   id: read-version
       #   run: |
       #     cat VERSION
