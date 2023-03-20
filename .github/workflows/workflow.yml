@@ -20,14 +20,35 @@ jobs:
         id: version
         uses: codacy/git-version@2.7.1
 
+      - name: Read version number
+        id: read-version
+        run: |
+          echo "::set-output name=current_version::$(cat VERSION)"
+
+      - name: Increment version number
+        id: increment-version
+        if: success()
+        run: |
+          current_version=$(cat VERSION)
+          next_version=$((current_version + 1))
+          echo $next_version > VERSION
+          echo "::set-output name=next_version::$next_version"
 
       - name: creating tags
         if: success()
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: | 
-            git tag -a v${{ github.run_id }} -m "Version ${{ github.run_id }}"
+            git tag -a v${{ steps.increment-version.outputs.next_version }} -m "Version ${{ steps.increment-version.outputs.next_version }}"
             git push --tags
+
+      # - name: creating tags
+      #   if: success()
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+      #   run: | 
+      #       git tag -a v${{ github.run_number }} -m "Version ${{ github.run_number }}"
+      #       git push --tags
       
       # - name: Use the version
       #   run: |
