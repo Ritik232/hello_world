@@ -35,7 +35,7 @@ jobs:
         id: increment-version
         if: success()
         run: |
-          echo "::set-output name=next_version::${{ format('{0}.{1}', ${{ steps.read-version.outputs.current_version }}, "1") }}"
+          echo "::set-output name=next_version::${{format('{0}.{1}', ${{steps.read-version.outputs.current_version}}, "1")}}"
 
       - name: creating tags
         if: success()
