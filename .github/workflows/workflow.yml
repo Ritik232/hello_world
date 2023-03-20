@@ -25,25 +25,33 @@ jobs:
           git config --global user.name "Ritik232"
           git config --global user.email "RMittal@calance.com"
 
-      - name: Read version number
-        id: read-version
-        run: |
-          cat VERSION
-          echo "::set-output name=current_version::$(cat VERSION)"
+      - name: Release
+        uses: semantic-release/action@v2
+        with:
+          github_token: ${{ secrets.GIT_TOKEN }}
+          debug: true
+      
 
-      - name: Increment version number
-        id: increment-version
-        if: success()
-        run: |
-          echo "::set-output name=next_version::${{format('{0}.{1}', ${{steps.read-version.outputs.current_version}}, "1")}}"
 
-      - name: creating tags
-        if: success()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-        run: | 
-            git tag -a v${{ steps.increment-version.outputs.next_version }} -m "Version ${{ steps.increment-version.outputs.next_version }}"
-            git push --tags
+      # - name: Read version number
+      #   id: read-version
+      #   run: |
+      #     cat VERSION
+      #     echo "::set-output name=current_version::$(cat VERSION)"
+
+      # - name: Increment version number
+      #   id: increment-version
+      #   if: success()
+      #   run: |
+      #     echo "::set-output name=next_version::${{format('{0}.{1}', ${{steps.read-version.outputs.current_version}}, "1")}}"
+
+      # - name: creating tags
+      #   if: success()
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+      #   run: | 
+      #       git tag -a v${{ steps.increment-version.outputs.next_version }} -m "Version ${{ steps.increment-version.outputs.next_version }}"
+      #       git push --tags
 
       # - name: creating tags
       #   if: success()
