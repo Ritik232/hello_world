@@ -7,7 +7,7 @@ on:
       - v*.*.*
 
 jobs:
-  lint:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -30,6 +30,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
+          tag: ${{ github.ref}}
           only_create_tag_if_release: true
 
       - name: Create a GitHub release
