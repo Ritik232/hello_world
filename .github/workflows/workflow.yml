@@ -7,7 +7,7 @@ on:
       - v*.*.*
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -30,25 +30,21 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
-      
-      - name: Check if tag was created
-        id: check_tag_created
-        run: |
-          if [ "$(git tag -l ${{ steps.tag_version.outputs.new_tag }})" == "${{ steps.tag_version.outputs.new_tag }}" ]; then echo "::set-output name=tag_created::true"; else echo "::set-output name=tag_created::false"; fi
+          custom_tag: ${{ github.ref}}
 
+create_release:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    steps:
       - name: Create a GitHub release
-        if: steps.check_tag_created.outputs.tag_created == 'true'
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
-      
-      - name: Stop workflow if tag was not created
-        if: steps.check_tag_created.outputs.tag_created != 'true'
-        run: exit 1
+          tag: ${{ steps.bump_version.outputs.new_tag }}
+          name: Release ${{ steps.bump_version.outputs.new_tag }}
+          body: ${{ steps.bump_version.outputs.changelog }}
 
-      # - name: Read version number 
+      # - name: Read version number
       #   id: read-version
       #   run: |
       #     cat VERSION
