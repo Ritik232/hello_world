@@ -19,6 +19,11 @@ jobs:
       - name: Git Version
         id: version
         uses: codacy/git-version@2.7.1
+      
+      - name: Set Git identity
+        run: |
+          git config --global user.name "Ritik232"
+          git config --global user.email "RMittal@calance.com"
 
       - name: Read version number
         id: read-version
