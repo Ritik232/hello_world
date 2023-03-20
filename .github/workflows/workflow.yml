@@ -26,7 +26,7 @@ jobs:
           git config --global user.email "RMittal@calance.com"
 
       - name: Release
-        uses: semantic-release/action@v2
+        uses: semantic-release/action@v5
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
           debug: true
