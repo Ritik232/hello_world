@@ -28,14 +28,16 @@ jobs:
       - name: Read version number
         id: read-version
         run: |
+          cat VERSION
           echo "::set-output name=current_version::$(cat VERSION)"
 
       - name: Increment version number
         id: increment-version
         if: success()
         run: |
-          current_version=$(cat VERSION)
-          next_version=$((current_version + 1))
+          ${{ current_version }}=$(cat VERSION)
+          echo ${{ current_version }}
+          next_version=$(${{ current_version }} + 1)
           echo $next_version > VERSION
           echo "::set-output name=next_version::$next_version"
 
