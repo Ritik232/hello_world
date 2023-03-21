@@ -30,7 +30,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
-           custom_tag: ${{ github.ref.startsWith('refs/tags/v') && github.ref.substring(10) }}
+          #  custom_tag: ${{ github.ref.startsWith('refs/tags/v') && github.ref.substring(10) }}
 
       - name: Create a GitHub release
         if: ${{ steps.tag_version.outcome == 'success' }}
