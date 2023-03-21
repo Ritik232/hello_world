@@ -3,8 +3,8 @@ name: Git Version
 
 on:
   push:
-    tag:
-      - v*.*.*
+    tags:
+     - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
-          custom_tag: ${{ github.ref}}
+          custom_tag: ${{ github.ref.replace('refs/tags/', '') }}
 
       - name: Create a GitHub release
         if: ${{ steps.tag_version.outcome == 'success' }}
