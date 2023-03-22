@@ -11,10 +11,8 @@ jobs:
     secrets:
       GHCR_TOKEN: ${{ secrets.GIT_TOKEN }}
       REPOSITORY_OWNER: ${{ secrets.REPOSITORY_OWNER }}
-    steps:
-    - name: "one"  
-      uses: Calance-US/calance-workflows/.github/workflows/build.yml@303-versioning-of-workflows
-      with:
-        image_name: calance-workflow-testing
-        docker_context_path: .
-        dockerfile_path: ./Dockerfile
+    uses: Calance-US/calance-workflows/.github/workflows/build.yml@303-versioning-of-workflows
+    with:
+      image_name: calance-workflow-testing
+      docker_context_path: .
+      dockerfile_path: ./Dockerfile
