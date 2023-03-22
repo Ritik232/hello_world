@@ -1,0 +1,20 @@
+name: Release Worklow
+
+on:
+  workflow_dispatch: 
+    inputs:
+      release_tags:
+        required: true
+        description: "Enter your semver tag to release next version"
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ inputs.release_tags }}
+          release_name: ${{ inputs.release_tags }}
