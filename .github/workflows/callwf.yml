@@ -1,0 +1,20 @@
+name: Build & publish image
+on:
+  push:
+    tags:
+    - v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+
+jobs:
+  build-and-push-dockerimages:
+    permissions:
+      contents: read
+      packages: write
+    secrets:
+      GHCR_TOKEN: ${{ secrets.GIT_TOKEN }}
+      REPOSITORY_OWNER: ${{ secrets.REPOSITORY_OWNER }}
+    steps:
+    - name: "one"  
+      uses: Calance-US/calance-workflows/.github/workflows/build.yml@303-versioning-of-workflows
+      with:
+        image_name: calance-workflow-testing
+        docker_context_path: .
+        dockerfile_path: ./Dockerfile
