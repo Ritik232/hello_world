@@ -8,7 +8,14 @@ def helloworld():
     if(request.method == 'GET'):
         data = {"data": "Hello World"}
         return jsonify(data)
-  
+def helloworld():
+    if(request.method == 'GET'):
+        data = {"data": "Hello World"}
+        return jsonify(data)
+def helloworld():
+    if(request.method == 'GET'):
+        data = {"data": "Hello World"}
+ return jsonify(data)
   
 if __name__ == '__main__':
     app.run(debug=True)
