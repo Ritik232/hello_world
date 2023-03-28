@@ -8,7 +8,7 @@ def helloworld():
     data = {
         "data": "Hello World I am ritik"
     }
-    return jsonify(data)
+    return data
 
 if __name__ == '__main__':
     app.run(debug=True, port=9000)
