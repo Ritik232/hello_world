@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="Flask project">
+<description>
+    Ruleset for a Flask project
+</description>
+<!-- General -->
+<rule ref="category/java/errorprone.xml/UnnecessaryParentheses" />
+<rule ref="category/java/bestpractices.xml/UnusedImports" />
+<rule ref="category/java/bestpractices.xml/UnusedPrivateField" />
+<!-- Flask specific -->
+<rule ref="category/python/codestyle.xml/Indentation" />
+<rule ref="category/python/design.xml/TooManyMethods" />
+<rule ref="category/python/design.xml/TooManyInstanceAttributes" />
+<rule ref="category/python/performance.xml/RangeFunction" />
+<rule ref="category/python/codestyle.xml/LineTooLong" />
+<rule ref="category/python/codestyle.xml/TrailingWhitespace" />
+</ruleset>
