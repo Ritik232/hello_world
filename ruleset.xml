@@ -1,87 +1,50 @@
 <?xml version="1.0"?>
-<ruleset name="Flask Project Ruleset" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+<ruleset name="FlaskProject" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd"
+    xsi:noNamespaceSchemaLocation="https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
 
-    <description>
-        Ruleset for analyzing a Flask project written in Python.
-    </description>
+    <description>Custom rules for Flask project</description>
 
-    <rule name="AvoidInefficientStringConcatenation" language="python" since="1.0.0">
+    <rule name="AvoidInefficientStringConcatenation" class="net.sourceforge.pmd.lang.rule.python.PythonRule" language="python" since="1.0.0">
         <description>
             Detects inefficient string concatenation inside loops.
         </description>
         <priority>3</priority>
-        <example><![CDATA[
-            # Bad
-            s = ''
-            for i in range(10):
-                s += str(i)
-            # Good
-            s = ''.join(str(i) for i in range(10))
-        ]]></example>
-        <properties>
-            <property name="minimum" value="5"/>
-        </properties>
-        <implementation>
-            <class>net.sourceforge.pmd.lang.python.rule.performance.AvoidInefficientStringConcatenationRule</class>
-        </implementation>
+        <example>
+            <![CDATA[
+            for i in range(1000):
+                s = s + "foo"
+            ]]>
+        </example>
     </rule>
 
-    <rule name="AvoidPythonEval" language="python" since="1.0.0">
+    <rule name="AvoidPythonEval" class="net.sourceforge.pmd.lang.rule.python.PythonRule" language="python" since="1.0.0">
         <description>
             Avoids the use of Python's eval() function.
         </description>
-        <priority>2</priority>
-        <example><![CDATA[
-            # Bad
-            x = eval('1 + 2')
-            # Good
-            x = 1 + 2
-        ]]></example>
-        <implementation>
-            <class>net.sourceforge.pmd.lang.python.rule.security.AvoidPythonEvalRule</class>
-        </implementation>
+        <priority>5</priority>
+        <example>
+            <![CDATA[
+            eval("1 + 1")
+            ]]>
+        </example>
     </rule>
 
-    <rule name="DuplicateCode" language="python" since="1.0.0">
+    <rule name="DuplicateCode" class="net.sourceforge.pmd.lang.rule.python.PythonRule" language="python" since="1.0.0">
         <description>
             Detects duplicate code blocks.
         </description>
-        <priority>3</priority>
-        <example><![CDATA[
-            # Bad
-            def add(x, y):
-                return x + y
-
-            def sub(x, y):
-                return x - y
-
-            def mul(x, y):
-                return x * y
-
-            def div(x, y):
-                return x / y
-
-            # Good
-            def add(x, y):
-                return x + y
-
-            def sub(x, y):
-                return x - y
-
-            def mul(x, y):
-                return x * y
-
-            def div(x, y):
-                return x / y
-        ]]></example>
-        <properties>
-            <property name="minimumTokens" value="50"/>
-        </properties>
-        <implementation>
-            <class>net.sourceforge.pmd.lang.python.rule.design.DuplicateCodeRule</class>
-        </implementation>
+        <priority>1</priority>
+        <example>
+            <![CDATA[
+            def foo():
+                print("Hello, World!")
+            
+            def bar():
+                print("Hello, World!")
+            ]]>
+        </example>
     </rule>
 
 </ruleset>
